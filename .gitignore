@@ -1,5 +1,6 @@
 .idea
 *.iml
 src/main/resources/algs4-data
+src/main/resources/test-data
 jars
 target

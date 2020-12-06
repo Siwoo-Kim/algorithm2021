@@ -83,17 +83,17 @@ public class ArrayQueue<E> implements Queue<E> {
     }
 
     public static void main(String[] args) {
-        Queue<String> stack = new ArrayQueue<>();
+        Queue<String> q = new ArrayQueue<>();
         In in = new In("src/main/resources/algs4-data/tobe.txt");
         while (!in.isEmpty()) {
             String e = in.readString();
             if (e.equals("-"))
-                System.out.print(stack.dequeue() + " ");
+                System.out.print(q.dequeue() + " ");
             else if (!e.isEmpty())
-                stack.enqueue(e);
+                q.enqueue(e);
         }
-        System.out.println("(" + stack.size() +" left on the stack)");
-        for (String e: stack)
+        System.out.println("(" + q.size() +" left on the queue)");
+        for (String e: q)
             System.out.println(e);
     }
 }

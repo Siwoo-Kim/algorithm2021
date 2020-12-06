@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.StdIn;
 public class TestBag {
     
     public static <E> Bag<E> getBags() {
-        return null;
+        return new LinkedList<>();
     } 
     
     public void stats() {

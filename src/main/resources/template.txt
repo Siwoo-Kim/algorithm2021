@@ -1,0 +1,20 @@
+/**
+ * [algo] [name]
+ * 
+ * problem
+ *  * 
+ *
+ * [algo] components
+ *  1. 
+ *  2. 
+ *  
+ *  [algo] flow.
+ *      1. 
+ *      2. 
+ *  
+ *  [algo] limitation
+ *      1.
+ * 
+ *  [algo] time complexity
+ *      * 
+ */

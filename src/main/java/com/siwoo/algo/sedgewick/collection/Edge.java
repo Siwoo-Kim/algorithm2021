@@ -1,7 +1,7 @@
-package com.siwoo.algo.paradigm;
+package com.siwoo.algo.sedgewick.collection;
 
 public class Edge<E> {
-    final E v, w;
+    public final E v, w;
 
     public Edge(E v, E w) {
         this.v = v;

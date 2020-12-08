@@ -1,5 +1,6 @@
 package com.siwoo.algo.paradigm;
 
+import com.siwoo.algo.sedgewick.collection.Edge;
 import com.siwoo.algo.util.AppConfig;
 
 import java.io.FileInputStream;

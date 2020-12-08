@@ -1,5 +1,6 @@
 package com.siwoo.algo.paradigm;
 
+import com.siwoo.algo.sedgewick.collection.PriorityQueue;
 import com.siwoo.algo.util.AppConfig;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdRandom;
@@ -7,6 +8,9 @@ import edu.princeton.cs.algs4.StdRandom;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import static com.google.common.base.Preconditions.checkElementIndex;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 정렬 sort.
@@ -55,9 +59,15 @@ public interface Sort<E extends Comparable<E>> {
      * @param elements
      * @return
      */
-    default boolean isSort(E[] elements) {
-        int N = elements.length;
-        for (int i=1; i<N; i++)
+    default boolean isSorted(E[] elements) {
+        return isSorted(elements, 0, elements.length);
+    }
+    
+    default boolean isSorted(E[] elements, int start, int end) {
+        checkElementIndex(start, elements.length);
+        checkElementIndex(end-1, elements.length);
+        int N = end;
+        for (int i=start+1; i<N; i++)
             if (less(elements[i], elements[i-1]))
                 return false;
         return true;
@@ -81,10 +91,19 @@ public interface Sort<E extends Comparable<E>> {
         String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tiny.txt";
         Scanner scanner = new Scanner(new FileInputStream(path));
         String[] data = scanner.nextLine().split("\\s+");
-        Sort<String> sort = new ShellSort<>();
+        Sort<String> sort = new PriorityQueue<>();
         sort.sort(data);
-        assert sort.isSort(data);
+        assert sort.isSorted(data);
         sort.show(data);
+
+        Sort<Integer> sort2 = new MergeSort<>();
+        Integer[] data2 = new Integer[50];
+        for (int i=0; i<50; i++)
+            data2[i] = StdRandom.uniform(100);
+        sort2.sort(data2);
+        assert sort2.isSorted(data2);
+        sort2.show(data2);
+        
 //        int n = 50;
 //        StdDraw.setCanvasSize(450, 640);
 //        StdDraw.setXscale(-1, n+1);

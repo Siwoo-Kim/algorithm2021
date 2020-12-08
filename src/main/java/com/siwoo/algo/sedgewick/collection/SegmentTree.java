@@ -1,4 +1,4 @@
-package com.siwoo.algo.paradigm;
+package com.siwoo.algo.sedgewick.collection;
 
 import com.siwoo.algo.util.AppConfig;
 

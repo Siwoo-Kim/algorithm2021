@@ -7,10 +7,17 @@
     <groupId>siwoo</groupId>
     <artifactId>algorithm2021</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-
     
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.0-jre</version>
+        </dependency>
+    </dependencies>
 </project>

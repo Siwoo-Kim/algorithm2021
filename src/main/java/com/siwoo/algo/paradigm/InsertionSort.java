@@ -19,9 +19,10 @@ public class InsertionSort<E extends Comparable<E>> implements Sort<E> {
     public void sort(E[] elements) {
         for (int uo=0; uo<elements.length; uo++) {
             int i = uo;
-            while (i > 0 && less(elements[i], elements[i-1]))
-                swap(elements, i, i-1);
-            Sort.show((Double[]) elements, i, uo);
+            while (i > 0 && less(elements[i], elements[i-1])) {
+                swap(elements, i, i - 1);
+                i--;
+            }
         }
     }
 }

@@ -78,21 +78,21 @@ public interface Sort<E extends Comparable<E>> {
     }
     
     static void main(String[] args) throws FileNotFoundException {
-//        String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tiny.txt";
-//        Scanner scanner = new Scanner(new FileInputStream(path));
-//        String[] data = scanner.nextLine().split("\\s+");
-//        Sort<String> sort = new InsertionSort<>();
-//        sort.sort(data);
-//        assert sort.isSort(data);
-//        sort.show(data);
-        int n = 50;
-        StdDraw.setCanvasSize(450, 640);
-        StdDraw.setXscale(-1, n+1);
-        StdDraw.setPenRadius(0.015);
-        Double[] a = new Double[n];
-        for (int i = 0; i < n; i++)
-            a[i] = StdRandom.uniform(0.0, 1.0);
-        InsertionSort<Double> sort = new InsertionSort<>();
-        sort.sort(a);
+        String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tiny.txt";
+        Scanner scanner = new Scanner(new FileInputStream(path));
+        String[] data = scanner.nextLine().split("\\s+");
+        Sort<String> sort = new ShellSort<>();
+        sort.sort(data);
+        assert sort.isSort(data);
+        sort.show(data);
+//        int n = 50;
+//        StdDraw.setCanvasSize(450, 640);
+//        StdDraw.setXscale(-1, n+1);
+//        StdDraw.setPenRadius(0.015);
+//        Double[] a = new Double[n];
+//        for (int i = 0; i < n; i++)
+//            a[i] = StdRandom.uniform(0.0, 1.0);
+//        InsertionSort<Double> sort = new InsertionSort<>();
+//        sort.sort(a);
     }
 }

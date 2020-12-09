@@ -5,7 +5,6 @@ import com.siwoo.algo.util.AppConfig;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Transaction;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;

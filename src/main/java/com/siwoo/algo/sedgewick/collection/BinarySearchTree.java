@@ -53,15 +53,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      최악의 경우엔 탐색이 N (트리의 높이 N-1) 큼의 시간 복잡도를 가진다.
  *          -> 이진 트리를 사용하려면 퀵 소트와 마찬가지로 삽입 전 시퀀스를 shuffle 하라.
  *
- *  [algo] floor(key) 와 ceiling(key) 연산  - 주어진 key 보다 작거나 같은 키 중 가장 큰 키.
- *      주어진 키가 root.key 보다 작다면 반드시 왼쪽 트리. (root key 은 정답이 될 수 없다)
- *      주어진 키가 root.key 보다 크다면 
- *          floor(root.right) 가 null 이라면 root.key 가 정답키. (오른쪽의 모든 노드가 key 보다 크다)
- *          아니라면 floor(root.right) 가 정답.
- *      
- *      마찬가지로 ceiling 시 root.key < k 라면 반드시 오른쪽에 존재. (root 키는 정답이 될 수 없다.)
- *          root.key > k 라면 가장 큰 키 중 작은 키를 찾아야 하므로 
- *          ceiling(root.key) == null 이라면 root.key 가 정답, 아니라면 ceiling(root.key) 가 정답.
+ *  [algo] floor(key) 와 ceiling(key) 연산  
+ *      floor(key) = largest root.key <= key
+ *          if key < root.key (루트의 키는 절대 정답이 될 수 없다)
+ *              must be on the left
+ *          if key > root.key (루트는 정답일 수도 있다.)
+ *              find target key on the right
+ *              if there is no candidate (successor), then the root key is the key looking for.
+ *              
+ *      ceiling(key) = smallest root.key >= key
+ *          if key > root.key (루트의 키는 절대 정답이 될 수 없다.)
+ *              must be on the right
+ *          if key < root.key (루트는 정답일 수도 있다.)
+ *             find target key on the left
+ *             if there is no candidate (pre-successor), the the root key is the key looking for.
  *      
  *  [algo] rank(key) 와 select(k) 연산 - 주어진 키보다 작은 키가 몇개나 되는가?
  *      size(root.left) == k 라면 탐색 성공.
@@ -77,8 +82,8 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
     private class Node {
         private Node left, right;
         private int size;
-        private V value;
         private K key;
+        private V value;
 
         public Node(K key, V value, int size) {
             this.key = key;
@@ -97,8 +102,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
     
     @Override
     public K min() {
-        if (isEmpty())
-            return null;
+        if (isEmpty()) return null;
         return min(root).key;
     }
 
@@ -109,8 +113,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public K max() {
-        if (isEmpty())
-            return null;
+        if (isEmpty()) return null;
         return max(root).key;
     }
 
@@ -157,19 +160,18 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public int rank(K key) {
-        if (isEmpty())
-            return 0;
+        if (isEmpty()) return 0;
         return rank(root, key);
     }
 
     private int rank(Node root, K key) {
         if (root == null) return 0;
-        if (root.key.compareTo(key) == 0)
-            return size(root.left);
-        else if (less(key, root.key))
-            return rank(root.left, key);
-        else 
+        if (less(key, root.key)) return rank(root.left, key);
+        if (less(root.key, key)) 
+            //Combine the left tree and root with the right result.
             return size(root.left) + 1 + rank(root.right, key);
+        //node's index == the number of nodes less than the node.
+        return size(root.left);
     }
 
     @Override
@@ -186,6 +188,13 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
         return select(root.left, k);
     }
 
+    /**
+     * dfs in-order gives you ordered keys.
+     * 
+     * @param left
+     * @param right
+     * @return
+     */
     @Override
     public Iterable<K> keys(K left, K right) {
         if (less(right, left)) return new LinkedList<>();
@@ -203,11 +212,11 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
     }
 
     private boolean between(K key, K left, K right) {
-        if (key.compareTo(left) == 0 || key.compareTo(right) == 0)
+        if (key.compareTo(left) == 0 || key.compareTo(right) == 0)  // left <= key or right >= key
             return true;
         return less(left, key) && less(key, right); // left < key < right
     }
-
+    
     @Override
     public void put(K key, V value) {
         cnt = 0;
@@ -216,15 +225,26 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
         va.addDataValue(cnt);
         assert checkVariant();
     }
-
+    
+    /**
+     * 경우의 수.
+     *  1. key is in the tree
+     *      update value
+     *  2. key isn't in the tree
+     *      insert value
+     *
+     * @param key
+     * @param value
+     */
     private Node put(Node root, K key, V value) {
-        if (root == null) return new Node(key, value, 1);
-        if (root.key.compareTo(key) == 0)
-            root.value = value;
-        else if (less(key, root.key)) 
+        if (root == null) 
+            return new Node(key, value, 1);
+        if (less(key, root.key))    // key < root.key
             root.left = put(root.left, key, value);
-        else 
+        else if (less(root.key, key))   // key > root.key
             root.right = put(root.right, key, value);
+        else 
+            root.value = value; // key == root.key. update key
         root.size = size(root.left) + size(root.right) + 1;
         return root;
     }
@@ -240,9 +260,9 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     private Node get(Node root, K key) {
         if (root == null) return null;
-        if (root.key.compareTo(key) == 0) return root;
-        if (less(key, root.key)) return get(root.left, key);
-        return get(root.right, key);
+        if (less(key, root.key)) return get(root.left, key);    // key < root.key
+        if (less(root.key, key)) return get(root.right, key);   // key > root.key
+        return root;    // key == root.key
     }
     
     private boolean less(K key1, K key2) {
@@ -263,15 +283,16 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public K popMin() {
-        if (isEmpty())
-            throw new NoSuchElementException();
+        if (isEmpty()) throw new NoSuchElementException();
         K k = min();
         root = popMin(root);
         return k;
     }
 
     private Node popMin(Node root) {
-        if (root.left == null) return root.right;
+        if (root.left == null) 
+            // root 의 left subtree 이므로 right 로 교체해도 ok
+            return root.right;
         root.left = popMin(root.left);
         root.size = size(root.left) + size(root.right) + 1;
         return root;
@@ -279,8 +300,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public K popMax() {
-        if (isEmpty())
-            throw new NoSuchElementException();
+        if (isEmpty()) throw new NoSuchElementException();
         K k = max();
         root = popMax(root);
         return k;
@@ -298,23 +318,42 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
         root = delete(root, key);
     }
 
+    /**
+     * 경우의 수.
+     *  1. 주어진 키와 관련된 노드가 없다.
+     *  2. 주어진 키와 관련된 노드가 있다.
+     *      2-1 해당 노드의 자식이 없다.
+     *          parent.[left|right] = null
+     *      2-2 해당 노드의 자식이 하나 존재한다.
+     *          parent.[left|right] = left == null? right: left
+     *      2-3 해당 노드의 자식이 둘 존재한다.
+     *          해당 노드의 successor 와 해당 노드를 교체한다.
+     *          
+     * @param root
+     * @param key
+     * @return
+     */
     private Node delete(Node root, K key) {
-        if (root == null) return null;
+        if (root == null) return null;  // no node match with the given key
         if (less(key, root.key)) 
             root.left = delete(root.left, key);
         else if (less(root.key, key)) {
             root.right = delete(root.right, key);
         } else {
+            // find the node to delete
             if (root.left == null)
                 return root.right;
             else if (root.right == null)
                 return root.left;
             else {
                 //there is two children.
+                assert root.right != null && root.left != null;
+                //replace the node with its successor
                 Node v = root;
                 root = min(v.right);
                 root.left = v.left;
-                root.right = delete(v.right, key);
+                //delete successor -> successor link
+                root.right = popMin(v.right);
             }
         }
         root.size = size(root.left) + size(root.right) + 1;
@@ -381,6 +420,8 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
             table.put(data[i], i);
         System.out.println(table.floor("G"));   //E
         System.out.println(table.select(3));    //H
+        System.out.println(table.get("H"));
+        System.out.println(table.get("G"));
         
         table.delete("X");
         System.out.println(table.get("X"));

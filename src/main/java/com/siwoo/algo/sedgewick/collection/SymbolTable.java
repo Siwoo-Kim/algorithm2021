@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * [algo] components
  *  1. 중복되지 않은 키와 중복 가능한 값.
- *  2. value 의 널 값 허용에 따른 구현이 차이.
+ *  2. value 의 널 값 허용에 따른 구현의 차이.
  *  3. 키의 동치성.
  *
  *  [algo] cost model.
@@ -98,7 +98,7 @@ public interface SymbolTable<K, V> {
     public static void main(String[] args) throws FileNotFoundException {
         String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tale.txt";
         Scanner scanner = new Scanner(new FileInputStream(path));
-        SymbolTable<String, Integer> st = new BinarySearchST<>();
+        SymbolTable<String, Integer> st = new BinarySearchTree<>();
         int min = 8;
         while (scanner.hasNext()) {
             String word = scanner.next();

@@ -3,6 +3,8 @@ package com.siwoo.algo.sedgewick.collection;
 /**
  * FIFO 큐.
  *  공정한 정책 때문에 순서가 보장되는 특성.
+ *  BFS 을 위한 자료구조.
+ *  
  * @param <E>
  */
 public interface Queue<E> extends Iterable<E> {

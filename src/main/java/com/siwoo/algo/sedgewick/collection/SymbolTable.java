@@ -98,8 +98,8 @@ public interface SymbolTable<K, V> {
     public static void main(String[] args) throws FileNotFoundException {
         String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tale.txt";
         Scanner scanner = new Scanner(new FileInputStream(path));
-        SymbolTable<String, Integer> st = new BinarySearchTree<>();
-        int min = 2;
+        SymbolTable<String, Integer> st = new RedBlackTree<>();
+        int min = 8;
         while (scanner.hasNext()) {
             String word = scanner.next();
             if (word.length() < min) continue;

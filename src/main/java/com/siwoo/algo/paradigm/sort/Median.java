@@ -1,4 +1,4 @@
-package com.siwoo.algo.paradigm;
+package com.siwoo.algo.paradigm.sort;
 
 
 /**

@@ -1,9 +1,11 @@
 package com.siwoo.algo.baekjoon;
 
-import com.sun.jndi.cosnaming.CNCtx;
+import com.siwoo.algo.util.Algorithm;
+import com.siwoo.algo.util.Using;
 
 import java.util.*;
 
+@Using(algorithm = Algorithm.STACK)
 public class P1158 {
     private static int N, K;
     public static void main(String[] args) {

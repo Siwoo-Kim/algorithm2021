@@ -1,6 +1,6 @@
 package com.siwoo.algo.sedgewick.collection;
 
-import com.siwoo.algo.paradigm.Sort;
+import com.siwoo.algo.paradigm.sort.Sort;
 import com.siwoo.algo.util.AppConfig;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Transaction;

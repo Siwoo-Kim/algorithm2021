@@ -1,6 +1,6 @@
 package com.siwoo.algo.sedgewick.collection;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.*;
 
 /**
  * [algo] [red-black balanced bst]
@@ -265,24 +265,92 @@ public class RedBlackTree<K extends Comparable<K>, V> implements OrderedSymbolTa
         return max(root.right);
     }
 
+    /**
+     * largest a key equal or less than given key
+     * 
+     * @param key
+     * @return
+     */
     @Override
     public K floor(K key) {
-        return null;
+        checkNotNull(key);
+        Node node = floor(root, key);
+        return node == null? null: node.key;
     }
 
+    private Node floor(Node root, K key) {
+        if (root == null) return null;
+        if (less(key, root.key)) return floor(root.left, key);
+        if (less(root.key, key)) {
+            Node right = floor(root.right, key);
+            return right == null? root: right;
+        }
+        return root;
+    }
+
+    /**
+     * smallest key equal or larger than given key
+     * 
+     * @param key
+     * @return
+     */
     @Override
     public K ceiling(K key) {
-        return null;
+        checkNotNull(key);
+        Node node = ceiling(root, key);
+        return node == null? null: node.key;
     }
 
+    private Node ceiling(Node root, K key) {
+        if (root == null) return null;
+        if (less(key, root.key)) {
+            Node left = ceiling(root.left, key);
+            return left == null? root: left;
+        }
+        if (less(root.key, key)) return ceiling(root.right, key);
+        return root;
+    }
+
+    /**
+     * the number of keys less then given key
+     * 
+     * @param key
+     * @return
+     */
     @Override
     public int rank(K key) {
-        return 0;
+        checkNotNull(key);
+        return rank(root, key);
     }
 
+    private int rank(Node root, K key) {
+        if (root == null) return 0;
+        if (less(key, root.key)) 
+            return rank(root.left, key);
+        if (less(root.key, key))
+            return size(root.left) + rank(root.right, key) + 1;
+        else
+            return size(root.left);
+    }
+
+    /**
+     * a key of given rank
+     * 
+     * @param k
+     * @return
+     */
     @Override
     public K select(int k) {
-        return null;
+        checkElementIndex(k, size());
+        return select(root, k);
+    }
+
+    private K select(Node root, int k) {
+        if (root == null) return null;
+        if (size(root.left) == k) return root.key;
+        if (size(root.left) < k) return select(root.right, k - size(root.left) -1);
+        return select(root.left, k);
+        
     }
 
     @Override
@@ -298,6 +366,20 @@ public class RedBlackTree<K extends Comparable<K>, V> implements OrderedSymbolTa
         if (between(root.key, left, right))
             q.enqueue(root.key);
         dfs(root.right, q, left, right);
+    }
+
+    @Override
+    public Iterable<V> values() {
+        Queue<V> q = new LinkedList<>();
+        dfsValues(root, q);
+        return q;
+    }
+
+    private void dfsValues(Node root, Queue<V> q) {
+        if (root == null) return;
+        dfsValues(root.left, q);
+        q.enqueue(root.value);
+        dfsValues(root.right, q);
     }
 
     private boolean between(K key, K left, K right) {
@@ -359,11 +441,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements OrderedSymbolTa
     @Override
     public int size() {
         return size(root);
-    }
-
-    @Override
-    public Iterable<V> values() {
-        return null;
     }
 
     @Override
@@ -438,7 +515,11 @@ public class RedBlackTree<K extends Comparable<K>, V> implements OrderedSymbolTa
 
     @Override
     public int size(K left, K right) {
-        return 0;
+        checkNotNull(left, right);
+        if (less(right, left)) return 0;
+        int size = rank(right) - rank(left);
+        if (contains(right)) size++;
+        return size;
     }
 
     @Override
@@ -456,5 +537,23 @@ public class RedBlackTree<K extends Comparable<K>, V> implements OrderedSymbolTa
         for (int i=0; i<seq.length; i++)
             tree.put(seq[i], i);
         System.out.println(tree.get("A"));
+
+        System.out.println(tree.floor("N"));
+        System.out.println(tree.floor("F"));
+        
+        System.out.println(tree.ceiling("N"));
+        System.out.println(tree.ceiling("F"));
+
+        System.out.println(tree.rank("H"));
+        System.out.println(tree.rank("M"));
+        System.out.println(tree.rank("B"));
+
+        System.out.println(tree.select(0));
+        System.out.println(tree.select(5));
+        System.out.println(tree.select(8));
+
+        System.out.println(tree.size("E", "L"));
+        System.out.println(tree.size("A", "M"));
+        System.out.println(tree.size("D", "N"));
     }
 }

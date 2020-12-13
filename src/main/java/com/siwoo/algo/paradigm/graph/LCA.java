@@ -1,4 +1,4 @@
-package com.siwoo.algo.paradigm;
+package com.siwoo.algo.paradigm.graph;
 
 import com.siwoo.algo.sedgewick.collection.Edge;
 import com.siwoo.algo.util.AppConfig;

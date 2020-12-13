@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Sort" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="com.siwoo.algo.paradigm.Sort" />
+    <option name="MAIN_CLASS_NAME" value="com.siwoo.algo.paradigm.sort.Sort" />
     <module name="algorithm2021" />
     <option name="VM_PARAMETERS" value="-ea" />
     <extension name="coverage">

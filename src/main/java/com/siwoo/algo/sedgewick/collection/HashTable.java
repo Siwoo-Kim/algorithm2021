@@ -48,7 +48,6 @@ public class HashTable<K, V> implements SymbolTable<K, V> {
 
     private static final int DEFAULT_CAPACITY = 17;
     private int N = 0, CAPACITY;
-    private VisualAccumulator va = new VisualAccumulator(50, 34350);
     private LinkedList<Node<K, V>>[] buckets;
 
     public HashTable() {

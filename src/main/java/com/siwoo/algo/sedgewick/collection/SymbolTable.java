@@ -101,7 +101,7 @@ public interface SymbolTable<K, V> {
         SymbolTable<String, Integer> st = new HashTable<>();
         int min = 8;
         while (scanner.hasNext()) {
-            String word = scanner.next();
+            String word = scanner.next(); 
             if (word.length() < min) continue;
             if (st.contains(word))
                 st.put(word, st.get(word) + 1);

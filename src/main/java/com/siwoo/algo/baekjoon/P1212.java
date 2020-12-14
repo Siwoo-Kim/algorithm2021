@@ -1,9 +1,22 @@
 package com.siwoo.algo.baekjoon;
 
+import com.siwoo.algo.util.Algorithm;
+import com.siwoo.algo.util.Using;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * 8 진수를 2진수로
+ * 8 진수의 n 자리의 수는 2 진수를 3 자리수로 나타낸 것과 같다.
+ * 
+ * 341
+ * 3    4   1
+ * 011 100 001
+ * 
+ */
+@Using(algorithm = Algorithm.BRUTE_FORCE)
 public class P1212 {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 

@@ -1,5 +1,12 @@
 package com.siwoo.algo.sedgewick.collection;
 
+/**
+ * Adjacency-list graph
+ *      
+ * time complexity
+ *  space,  add edge,   edge between v and w,   iterate over v adjacent to v
+ *  V+E      1              degree(v)                 degree(v)
+ */
 public class UnDirectedGraph<E> implements Graph<E> {
     private SymbolTable<E, LinkedList<Edge<E>>> G = new HashTable<>();
     private int edges;

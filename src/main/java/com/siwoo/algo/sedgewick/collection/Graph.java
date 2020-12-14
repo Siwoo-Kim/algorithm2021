@@ -8,7 +8,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * [algo] [graph]
  *  그래프는 정점 vertex 의 집합과 집합에 속하는 정정의 쌍을 연결하는 간선 edge 의 모음이다.
- *  
  *
  * problem
  *  * 요소 e 를 관리하고 요소간의 관계 connection 을 표현하는 자료구조를 구현하고 싶다.
@@ -53,13 +52,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      모든 간선이 두 그릅으로 나눠진 정점의 집합 양쪽을 연결하는 그래프.
  *      
  *      eg) G(student & subject)
- * 
+ *      
+ *  15. 그래프의 밀도 (density)
+ *      정점이 많고 정점 당 적은 차수 degree 일수록 sparse
+ *      
  * Graph 에 대한 문제와 알고리즘.
  *  1. v 에 연결된 정점들. - dfs, bfs, union-find
  *  2. v-w 의 경로. - dfs, bfs. (최단 경로 아님)
  *  3. 그래프의 연결 요소. - dfs, union-find
- *  4. 순환 탐지.
+ *  4. 무방향 그래프 와 방향 그래프의 순환 탐지.
  *  5. 그래프 G 가 이분 그래프 bipartite 인가?
+ *  6. euler tour   - 간선을 한번씩만 사용하는 순환 경로가 있는가?
+ *  7. hamilton tour    - 정점을 한번씩만 사용하는 순환 경로가 있는가?
+ *  8. mst
+ *  
  */
 public interface Graph<E> {
 
@@ -153,7 +159,7 @@ public interface Graph<E> {
     }
 
     static void main(String[] args) {
-        final String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tinyG.txt";
+        final String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/mediumG.txt";
         In in = new In(path);
         int V = in.readInt(),
                 E = in.readInt();
@@ -162,6 +168,10 @@ public interface Graph<E> {
             Edge<Integer> edge = new Edge<>(in.readInt(), in.readInt());
             G.addEdge(edge);
         }
-        System.out.println(G.asString());
+        System.out.println(G.toString());
+        System.out.println(G.degree(3));
+        System.out.println(G.maxDegree());
+        System.out.println(G.sizeOfSelfLoops());
+        System.out.println(G.sizeOfEdges());
     }
 }

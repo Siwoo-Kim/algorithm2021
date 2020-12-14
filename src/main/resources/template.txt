@@ -4,17 +4,17 @@
  * problem
  *  * 
  *
- * [algo] components
+ * components
  *  1. 
  *  2. 
  *  
- *  [algo] flow.
+ *  algorithm.
  *      1. 
  *      2. 
  *  
- *  [algo] limitation
+ *  limitation
  *      1.
  * 
- *  [algo] time complexity
+ *  time complexity
  *      * 
  */

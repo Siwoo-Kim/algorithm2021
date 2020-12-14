@@ -92,11 +92,19 @@ public interface UnionFind<E> {
     boolean connected(E p, E q);
 
     /**
-     * number of components.
+     * the number of components.
      * 
      * @return
      */
     int count();
+
+    /**
+     * the number of elements belongs to same component
+     * 
+     * @param source
+     * @return
+     */
+    int size(E source);
 
     static void main(String[] args) throws FileNotFoundException {
         //tinyUF = 2, mediumUF = 66

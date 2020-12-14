@@ -1,16 +1,17 @@
 package com.siwoo.algo.sedgewick.collection;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class LinkedList<E> implements Stack<E>, Queue<E>, Bag<E> {
-    
+
     private class Node {
+
         E e;
         Node next, prev;
-
         public Node(E e) {
             this.e = e;
         }
@@ -19,11 +20,21 @@ public class LinkedList<E> implements Stack<E>, Queue<E>, Bag<E> {
         public String toString() {
             return String.format("(%s)", e);
         }
+
     }
     
     private Node root, leaf;
     private int N;
-    
+
+    public LinkedList() {
+    }
+
+    public LinkedList(LinkedList<E> from) {
+        checkNotNull(from);
+        for (E e: from)
+            pushFirst(e);
+    }
+
     public void pushFirst(E e) {
         checkNotNull(e);
         Node old = root;
@@ -87,7 +98,7 @@ public class LinkedList<E> implements Stack<E>, Queue<E>, Bag<E> {
     }
     
     @SuppressWarnings("unchecked")
-    private E[] toArray() {
+    public E[] toArray() {
         E[] elements = (E[]) new Object[N];
         return toArray(root, 0, elements);
     }

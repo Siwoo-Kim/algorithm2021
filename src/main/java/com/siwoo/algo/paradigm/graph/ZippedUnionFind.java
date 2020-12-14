@@ -69,4 +69,9 @@ public class ZippedUnionFind<E> implements UnionFind<E> {
     public int count() {
         return size;
     }
+
+    @Override
+    public int size(E source) {
+        return sizes.get(find(source));
+    }
 }

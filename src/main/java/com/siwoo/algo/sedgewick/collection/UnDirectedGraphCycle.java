@@ -22,40 +22,44 @@ import edu.princeton.cs.algs4.In;
  *
  */
 public class UnDirectedGraphCycle<E> implements Cycle<E> { 
-    private boolean hasCycle;
+    private Stack<E> cycle;
 
     public UnDirectedGraphCycle(Graph<E> G) {
         Set<E> visit = new Set<>();
+        Stack<E> onStack = new LinkedList<>();
         for (E v: G.vertexes())
             if (!visit.contains(v))
-                dfs(v, v, visit, G);
+                if (dfs(v, v, visit, onStack, G))
+                    break;
     }
 
-    private void dfs(E v, E u, Set<E> visit, Graph<E> G) {
+    private boolean dfs(E v, E u, Set<E> visit, Stack<E> onStack, Graph<E> G) {
         visit.add(v);
-        for (E w: G.adj(v))
-            if (!visit.contains(w))
-                dfs(w, v, visit, G);
-            else if (u.equals(w))
-                hasCycle = true;
+        onStack.push(v);
+        for (E w: G.adj(v)) {
+            if (!visit.contains(w)) {
+                if (dfs(w, v, visit, onStack, G)) return true;
+            } else if (!u.equals(w)) {
+                cycle = new LinkedList<>();
+                cycle.push(w);
+                while (!onStack.peek().equals(w))
+                    cycle.push(onStack.pop());
+                cycle.push(w);
+                return true;
+            }
+        }
+        onStack.pop();
+        return false;
     }
 
     @Override
     public boolean hasCycle() {
-        return hasCycle;
+        return cycle != null;
     }
 
-    public static void main(String[] args) {
-        final String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tinyG.txt";
-        In in = new In(path);
-        int V = in.readInt(),
-                E = in.readInt();
-        Graph<Integer> G = new UnDirectedGraph<>();
-        for (int i=0; i<E; i++) {
-            Edge<Integer> edge = new Edge<>(in.readInt(), in.readInt());
-            G.addEdge(edge);
-        }
-        Cycle<Integer> cycle = new UnDirectedGraphCycle<>(G);
-        System.out.println(cycle.hasCycle());
+    @Override
+    public Iterable<E> cycle() {
+        return cycle;
     }
+
 }

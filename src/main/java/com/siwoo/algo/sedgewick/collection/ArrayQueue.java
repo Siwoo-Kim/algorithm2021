@@ -71,7 +71,7 @@ public class ArrayQueue<E> implements Queue<E> {
         
         @Override
         public boolean hasNext() {
-            return i > n;
+            return i < n;
         }
 
         @Override
@@ -80,6 +80,15 @@ public class ArrayQueue<E> implements Queue<E> {
             i++;
             return e;
         }
+    }
+    
+    public String toString() {
+        StringBuilder sb = new StringBuilder("(");
+        for (int i=0; i<n; i++)
+            sb.append(a[(head+i)%a.length])
+                    .append(i==n-1?"": ", ");
+        sb.append(")");
+        return sb.toString();
     }
 
     public static void main(String[] args) {

@@ -40,4 +40,6 @@ public interface Stack<E> extends Iterable<E> {
      * @return
      */
     int size();
+
+    boolean contains(E w);
 }

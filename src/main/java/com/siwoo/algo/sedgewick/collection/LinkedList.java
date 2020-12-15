@@ -134,8 +134,8 @@ public class LinkedList<E> implements Stack<E>, Queue<E>, Bag<E> {
     }
 
     @Override
-    public E peek() {   // fail
-        return peekLast();
+    public E peek() { 
+        return peekFirst();
     }
 
     @Override
@@ -218,7 +218,15 @@ public class LinkedList<E> implements Stack<E>, Queue<E>, Bag<E> {
     public int size() {
         return N;
     }
-    
+
+    @Override
+    public boolean contains(E e) {
+        for (E e1: this)
+            if (e1.equals(e))
+                return true;
+        return false;
+    }
+
     public Iterator<E> iterator() {
         return new Itr();
     }
@@ -255,7 +263,20 @@ public class LinkedList<E> implements Stack<E>, Queue<E>, Bag<E> {
         }
     }
 
-//    public static void main(String[] args) {
+    @Override
+    public String toString() {
+        StringBuilder sb = toString(root, new StringBuilder("("));
+        sb.append(")");
+        return sb.toString();
+    }
+
+    private StringBuilder toString(Node root, StringBuilder sb) {
+        if (root == null) return sb;
+        sb.append(root.e).append(root.next == null? "": ", ");
+        return toString(root.next, sb);
+    }
+
+    //    public static void main(String[] args) {
 //        Queue<String> q = new LinkedList<>();
 //        In in = new In(AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tobe.txt");
 //        while (!in.isEmpty()) {

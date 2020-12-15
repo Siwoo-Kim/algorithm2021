@@ -25,9 +25,7 @@ public class DFSGraphSearch<E> implements GraphSearch<E> {
     
     public DFSGraphSearch(Graph<E> G, E source) {
         this.source = source;
-        for (E v: G.vertexes())
-            if (!visit.contains(v))
-                dfs(G, v);
+        dfs(G, source);
     }
 
     private void dfs(Graph<E> G, E v) {

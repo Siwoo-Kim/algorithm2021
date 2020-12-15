@@ -3,6 +3,7 @@ package com.siwoo.algo.sedgewick.collection;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 
+import java.util.Arrays;
 import java.util.EmptyStackException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -79,6 +80,14 @@ public class ArrayStack<E> implements Stack<E> {
     }
 
     @Override
+    public boolean contains(E e) {
+        for (int i=0; i<n; i++)
+            if (a[i].equals(e))
+                return true;
+        return false;
+    }
+
+    @Override
     public Iterator<E> iterator() {
         return new Iter();
     }
@@ -95,6 +104,15 @@ public class ArrayStack<E> implements Stack<E> {
         public E next() {
             return a[end--];
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("(");
+        for (int i=n-1; i>=0; i--)
+            sb.append(a[i]).append(i == 0? "": ", ");
+        sb.append(")");
+        return sb.toString();
     }
 
     public static void main(String[] args) {

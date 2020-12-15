@@ -2,7 +2,6 @@ package com.siwoo.algo.baekjoon;
 
 import com.siwoo.algo.util.Algorithm;
 import com.siwoo.algo.util.Using;
-import org.checkerframework.checker.guieffect.qual.UI;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -16,6 +15,12 @@ import java.util.Scanner;
  *
  *  D[n] 이 n 개의 카드를 선택했을 때, 최대 금액이라 한다면
  *  
+ *  n 개 번째에서의 경우의 수.
+ *      i = 0~n 개까지를 선택.
+ *      
+ *      i 개짜리 카드팩을 구했을 때의 최대값
+ *      D[n-i] + P[i]
+ *      
  *  1 <= i <= n
  *  D[n] = max(D[n-i]+P[i])
  *      카드 i 개 만큼 산다면, 이전 선택의 최대 값은 N-i 이다.

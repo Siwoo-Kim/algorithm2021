@@ -10,7 +10,14 @@ public class Edge<E> {
         this.v = v;
         this.w = w;
     }
-    
+
+    public E other(E u) {
+        checkNotNull(u);
+        if (v.equals(u)) return w;
+        if (w.equals(u)) return v;
+        throw new IllegalArgumentException();
+    }
+
     public Edge<E> reverse() {
         return new Edge<>(w, v);
     }

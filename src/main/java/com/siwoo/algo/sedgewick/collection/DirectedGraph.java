@@ -32,6 +32,15 @@ public class DirectedGraph<E> implements Digraph<E> {
     }
 
     @Override
+    public Iterable<Edge<E>> edgeOf(E v) {
+        checkNotNull(v);
+        LinkedList<Edge<E>> edges = new LinkedList<>();
+        for (DiEdge<E> e: G.get(v))
+            edges.add(e);
+        return edges;
+    }
+
+    @Override
     public Digraph<E> reverse() {
         Digraph<E> digraph = new DirectedGraph<>();
         for (E v: G.keys())

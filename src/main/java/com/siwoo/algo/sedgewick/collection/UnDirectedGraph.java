@@ -1,5 +1,7 @@
 package com.siwoo.algo.sedgewick.collection;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Adjacency-list graph
  *      
@@ -43,6 +45,15 @@ public class UnDirectedGraph<E> implements Graph<E> {
     @Override
     public Iterable<E> vertexes() {
         return G.keys();
+    }
+
+    @Override
+    public Iterable<Edge<E>> edgeOf(E v) {
+        checkNotNull(v);
+        LinkedList<Edge<E>> edges = new LinkedList<>();
+        for (Edge<E> e: G.get(v))
+            edges.add(e);
+        return edges;
     }
 
     @Override

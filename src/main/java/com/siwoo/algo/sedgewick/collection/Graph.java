@@ -96,7 +96,12 @@ public interface Graph<E> {
      * @param v
      * @return
      */
-    Iterable<E> adj(E v);
+    default Iterable<E> adj(E v) {
+        LinkedList<E> adj = new LinkedList<>();
+        for (Edge<E> e: edgeOf(v))
+            adj.add(e.w);
+        return adj;
+    }
 
     /**
      * all the vertexes belongs to the graph
@@ -104,6 +109,27 @@ public interface Graph<E> {
      * @return
      */
     Iterable<E> vertexes();
+
+    /**
+     * edges incident to given v
+     * 
+     * @param v
+     * @return
+     */
+    Iterable<Edge<E>> edgeOf(E v);
+
+    /**
+     * all the edges in the graph.
+     * 
+     * @return
+     */
+    default Iterable<Edge<E>> edges() {
+        LinkedList<Edge<E>> edges = new LinkedList<>();
+        for (E v: vertexes())
+            for (Edge<E> e: edgeOf(v))
+                edges.add(e);
+        return edges;
+    }
     
     /**
      * degree of given vertex

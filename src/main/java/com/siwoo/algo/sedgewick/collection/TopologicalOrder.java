@@ -8,10 +8,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class TopologicalOrder<E> {
     private Iterable<E> order;
 
     public TopologicalOrder(Digraph<E> G) {
+        checkNotNull(G);
         DFS<E> dfs = new DFS<>(G);
         LinkedList<E> order = new LinkedList<>();
         for (E e : dfs.reversedPostOrder())

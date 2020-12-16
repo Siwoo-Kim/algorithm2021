@@ -3,7 +3,6 @@ package com.siwoo.algo.sedgewick.collection;
 import com.siwoo.algo.util.AppConfig;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -28,14 +27,16 @@ import java.util.Scanner;
  *       경로 중 시작 정점과 끝 정점이 같은 경로.
  *  5. 단순 순환.
  *      중복되는 간선이나 정점이 없는 순환 경로. (단, 시작과 끝 정점 제외)
- *  6. 도달성.
+ *  6. 도달성 ( != 연결성 )
  *      어떤 정점 v 에서 w 에 방향 경로가 존재하면 "v-w 은 도달 가능하다" 한다.
  *      "v-w 도달 가능하다" 해서 "w-v 도달 가능하다" 은 참이 아니다.
- *  7. DAG (비순환 방향 그래프)
+ *  7. 연결성
+ *      v->w 라면 w->v
+ *  8. DAG (비순환 방향 그래프)
+ *      순환이 없는 방향 그래프 G.
  *      스케줄링, 작업들의 선행 관계 문제  
  *      방향 그래프 G 의 위상 정렬을 위한 "선행 조건"
- *      
- *  8. 위상 정렬. Topological order
+ *  9. 위상 정렬. Topological order
  *      어떤 비순향 방향 그래프 DAG  주어졌을 때, 모든 정점들을 간선이 가리키는 방향으로만 나열.
  *      중요 속성. 가장 뒤에 있는 정점의 in-degree 은 0이여야 한다.
  *      앞에 있는 정점 v 은 뒤에 있는 정점 w 을 가리키는 간선 v->w 이 없어야 한다.가
@@ -46,14 +47,6 @@ import java.util.Scanner;
  *          v->w, w->z, z->v 라면 작업을 스케줄링을 할 수 없다.
  *          v 을 하기 위해선 z 가 선행 작업이고, z 을 하귀 위해선 v 가 선행 작업이므로 모순.
  *          
- *      
- *  algorithm.
- *      1. 
- *      2. 
- *
- *  limitation
- *      1.
- *
  *  time complexity
  *      * 
  */

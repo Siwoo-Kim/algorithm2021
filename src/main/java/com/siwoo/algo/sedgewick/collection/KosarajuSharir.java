@@ -11,13 +11,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *  만약 정점의 집합 v 가 있고, 모두 강하게 연결되어 있다면, 그 방향 그래프를 강하게 연결된 방향 그래프라 한다.
  *  방향 그래프에서 어떤 부분 정점 집합이 강한 연결성을 가지면 이 것을 connected component 라 한다.
  *  
- *  
+ *  idea
+ *      1. cyclic 이 생성되면 component 가 생성. (kernel)
+ *      
  * problem
  *  * 방향 그래프에서 강하게 연결된 정점끼리 그룹화 하고 싶다.
  *  강하게 연결이란 v-w == w-v
  *  
  * components
- *  1. 그래프 G 의 간선의 방향이 반전된 그래프 GR
+ *  1. 그래프 G 의 간선의 방향이 반전된 그래프 GR (G 에서 GR 을 하더라도 component 은 변경되지 않는다. 순환은 v->w 이면, w->v 이기 때문)
  *  2. GR 의 위상정렬. ( G 의 위상정렬은 output 정점 순이고, GR 은 input 정점 순이다. (반전 되었으므로)
  *  3. 위상정렬을 통한 dfs 방문.
  *

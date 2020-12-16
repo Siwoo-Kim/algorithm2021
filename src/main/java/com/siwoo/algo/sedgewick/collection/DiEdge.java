@@ -13,4 +13,9 @@ public class DiEdge<E> extends Edge<E> {
     public E to() {
         return w;
     }
+
+    @Override
+    public DiEdge<E> reverse() {
+        return new DiEdge<>(to(), from());
+    }
 }

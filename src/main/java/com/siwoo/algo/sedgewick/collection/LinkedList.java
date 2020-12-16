@@ -115,7 +115,7 @@ public class LinkedList<E> implements Stack<E>, Queue<E>, Bag<E> {
 
     @Override
     public void enqueue(E e) {
-        pushFirst(e);
+        pushLast(e);
     }
 
     @Override

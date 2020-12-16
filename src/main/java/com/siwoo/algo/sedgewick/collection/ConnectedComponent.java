@@ -54,7 +54,7 @@ public interface ConnectedComponent<E> {
         for (int v: G.vertexes())
             connectedComponent[cc.id(v)].enqueue(v);
         for (int i=1; i<=cc.count(); i++) {
-            StringBuilder sb = new StringBuilder(i).append(": ");
+            StringBuilder sb = new StringBuilder(i + "").append(": ");
             for (int w: connectedComponent[i])
                 sb.append(w).append(" ");
             System.out.println(sb);

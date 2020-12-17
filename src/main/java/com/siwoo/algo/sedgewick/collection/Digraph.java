@@ -57,7 +57,7 @@ public interface Digraph<E> extends Graph<E> {
      * 
      * @param edge
      */
-    void addEdge(DiEdge<E> edge);
+    void addEdge(Diedge<E> edge);
     
     /**
      * add v->w edge into the graph.
@@ -66,8 +66,11 @@ public interface Digraph<E> extends Graph<E> {
      */
     @Override
     default void addEdge(Edge<E> edge) {
-        addEdge(new DiEdge<>(edge.v, edge.w));
+        addEdge(new Diedge<>(edge.v, edge.w));
     }
+
+    @Override
+    Iterable<Diedge<E>> edgeOf(E v);
 
     /**
      * reverse this digraph.
@@ -84,7 +87,7 @@ public interface Digraph<E> extends Graph<E> {
                 E = scanner.nextInt();
         Digraph<Integer> G = new DirectedGraph<>();
         for (int i=0; i<E; i++) {
-            DiEdge<Integer> edge = new DiEdge<>(scanner.nextInt(), scanner.nextInt());
+            Diedge<Integer> edge = new Diedge<>(scanner.nextInt(), scanner.nextInt());
             G.addEdge(edge);
         }
         System.out.println(G.toString());

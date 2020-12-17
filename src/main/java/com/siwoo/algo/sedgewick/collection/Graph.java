@@ -116,7 +116,7 @@ public interface Graph<E> {
      * @param v
      * @return
      */
-    Iterable<Edge<E>> edgeOf(E v);
+    Iterable<? extends Edge<E>> edgeOf(E v);
 
     /**
      * all the edges in the graph.

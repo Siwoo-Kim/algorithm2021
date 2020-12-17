@@ -15,6 +15,9 @@ public class TopologicalOrder<E> {
 
     public TopologicalOrder(Digraph<E> G) {
         checkNotNull(G);
+//        DirectedGraphCycle<E> cycle = new DirectedGraphCycle<>(G);
+//        if (cycle.hasCycle())
+//            throw new IllegalArgumentException();
         DFS<E> dfs = new DFS<>(G);
         LinkedList<E> order = new LinkedList<>();
         for (E e : dfs.reversedPostOrder())
@@ -35,7 +38,7 @@ public class TopologicalOrder<E> {
             String v = token.nextToken();
             while (token.hasMoreTokens()) {
                 String next = token.nextToken();
-                DiEdge<String> edge = new DiEdge<>(v, next);
+                Diedge<String> edge = new Diedge<>(v, next);
                 G.addEdge(edge);
             }
         }

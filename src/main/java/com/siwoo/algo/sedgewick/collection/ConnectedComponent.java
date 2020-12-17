@@ -43,7 +43,7 @@ public interface ConnectedComponent<E> {
                 E = scanner.nextInt();
         Digraph<Integer> G = new DirectedGraph<>();
         for (int i=0; i<E; i++) {
-            Edge<Integer> edge = new DiEdge<>(scanner.nextInt(), scanner.nextInt());
+            Edge<Integer> edge = new Diedge<>(scanner.nextInt(), scanner.nextInt());
             G.addEdge(edge);
         }
         ConnectedComponent<Integer> cc = new KosarajuSharir<>(G);

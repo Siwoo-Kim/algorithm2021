@@ -3,6 +3,8 @@ package com.siwoo.algo.sedgewick.collection;
 import com.siwoo.algo.paradigm.graph.UnionFind;
 import com.siwoo.algo.paradigm.graph.ZippedUnionFind;
 
+import java.util.Random;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -28,7 +30,8 @@ public class Kruskal<E> implements MinimumSpanningTree<E> {
     
     public Kruskal(Graph<E> G) {
         checkNotNull(G);
-        if (G.sizeOfVertexes() == 0) return;
+        if (!isConnected(G))
+            throw new IllegalArgumentException("Graph should be connected");
         UnionFind<E> uf = new ZippedUnionFind<>();
         for (E v: G.vertexes()) {
             uf.put(v);

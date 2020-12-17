@@ -88,6 +88,15 @@ public class Set<E> implements Iterable<E> {
         return table.keys().iterator();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("(");
+        Iterator<E> itr = iterator();
+        while (itr.hasNext())
+            sb.append(itr.next()).append(itr.hasNext()? ", ": "");
+        return sb.append(")").toString();
+    }
+
     public static void main(String[] args) {
         class DeDup {
             Set<String> set = new Set<>();

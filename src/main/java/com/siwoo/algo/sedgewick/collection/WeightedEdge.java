@@ -20,6 +20,6 @@ public class WeightedEdge<E> extends Edge<E> implements Comparable<WeightedEdge<
 
     @Override
     public String toString() {
-        return String.format("%s - %s : %.02f", v, w, weight);
+        return String.format( "%s: %.02f", super.toString(), weight);
     }
 }

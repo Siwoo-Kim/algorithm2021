@@ -33,7 +33,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *  (이 방법은 다익스트라에서도 유사하게 사용)
  *  
  *  time complexity
- *      * 
+ *      * ElogE
  */
 public class Prim<E> implements MinimumSpanningTree<E> {
     private double weight;
@@ -43,7 +43,9 @@ public class Prim<E> implements MinimumSpanningTree<E> {
 
     public Prim(Graph<E> G) {
         checkNotNull(G);
-        if (G.sizeOfVertexes() == 0) return;
+        ConnectedComponent<E> cc = new CC<>(G);
+        if (cc.count() != 1)
+            throw new IllegalArgumentException("Graph should be connected.");
         E source = G.vertexes().iterator().next();
         PriorityQueue<WeightedEdge<E>> pq = new PriorityQueue<>((e1, e2) -> e2.compareTo(e1));
         Set<E> visit = new Set<>(); //mst
@@ -54,10 +56,10 @@ public class Prim<E> implements MinimumSpanningTree<E> {
         }
         distTo.put(source, 0.);
         visit(source, visit, pq, distTo, G);
-        while (!pq.isEmpty() && E - 1 != MST.size()) {
+        while (!pq.isEmpty() && E - 1 != MST.size()) {  // E = V-1
             WeightedEdge<E> edge = pq.dequeue();
             if (visit.contains(edge.v) 
-                    && visit.contains(edge.w))  //skip both are already in mst
+                    && visit.contains(edge.w))  //skip both are already in mst  
                 continue;
             addEdge(edge);
             visit(edge.w, visit, pq, distTo, G);
@@ -71,10 +73,11 @@ public class Prim<E> implements MinimumSpanningTree<E> {
         visit.add(v);
         for (Edge<E> e: G.edgeOf(v)) {
             WeightedEdge<E> we = (WeightedEdge<E>) e;
+            E w = we.other(v);
             // check w is already in mst
-            if (visit.contains(we.other(v))) continue;
+            if (visit.contains(w)) continue;
             // only shorter crossing edge is applicable
-            if (distTo.get(we.other(v)) <= we.weight) continue;
+            if (distTo.get(w) <= we.weight) continue;
             distTo.put(we.other(v), we.weight);
             pq.enqueue(we);
         }
@@ -120,5 +123,10 @@ public class Prim<E> implements MinimumSpanningTree<E> {
         for (Edge<E> e: MST.get(v))
             edges.add(e);
         return edges;
+    }
+    
+    @Override
+    public String toString() {
+        return asString();
     }
 }

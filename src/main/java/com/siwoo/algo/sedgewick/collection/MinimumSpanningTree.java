@@ -4,6 +4,7 @@ import com.siwoo.algo.util.AppConfig;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -32,6 +33,12 @@ import java.util.Scanner;
  *   가중 간선 그래프 G 에서, 어떤 임의의 자르기에서 최소 가중치를 가지는 횡단 간선은 그래프의 MST 에 반드시 포함된다.
  *
  */
+
+/**
+ * A spanning tree of G is a subgraph T that is both a tree and spanning.
+ * MST is a sa min weight spanning tree.
+ * @param <E>
+ */
 public interface MinimumSpanningTree<E> extends Graph<E> {
 
     /**
@@ -40,9 +47,14 @@ public interface MinimumSpanningTree<E> extends Graph<E> {
      * @return
      */
     double weight();
+    
+    default boolean isConnected(Graph<E> G) {
+        ConnectedComponent<E> cc = new CC<>(G);
+        return cc.count() == 1;
+    }
 
     static void main(String[] args) throws FileNotFoundException {
-        final String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/tinyEWG.txt";
+        final String path = AppConfig.INSTANCE.getProperty("app.resources.algs4data") + "/mediumEWG.txt";
         Scanner scanner = new Scanner(new BufferedReader(new FileReader(path)));
         Graph<Integer> G = new UnDirectedGraph<>();
         int V = scanner.nextInt(),
@@ -55,6 +67,9 @@ public interface MinimumSpanningTree<E> extends Graph<E> {
             G.addEdge(edge);
         }
         MinimumSpanningTree<Integer> mst = new Kruskal<>(G);
-        System.out.println(mst.weight());
+        System.out.printf("%.2f%n", mst.weight());
+
+        for (int i=0; i<100; i++)
+            System.out.println((new Random().nextInt(90000000) + 10000000));
     }
 }

@@ -5,6 +5,7 @@ import com.siwoo.algo.util.AppConfig;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Transaction;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -205,7 +206,7 @@ public class PriorityQueue<E extends Comparable<E>> implements Queue<E>, Sort<E>
     public int size() {
         return N;
     }
-
+    
     @Override
     public Iterator<E> iterator() {
         return new Itr();
@@ -223,6 +224,14 @@ public class PriorityQueue<E extends Comparable<E>> implements Queue<E>, Sort<E>
         public E next() {
             return heap[i++];
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("(");
+        for (int i=1; i<=N; i++)
+            sb.append(heap[i]).append(i == N? "": ", ");
+        return sb.append(")").toString();
     }
 
     public static void main(String[] args) {

@@ -11,6 +11,10 @@ public class Edge<E> {
         this.w = w;
     }
 
+    public E either() {
+        return v;
+    }
+    
     public E other(E u) {
         checkNotNull(u);
         if (v.equals(u)) return w;

@@ -30,7 +30,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      4-2 path.v 에 부속된 모든 간선에 대한 이완작업.
  *      5. 큐가 빌때까지 진행.
  *
- * 
  *  limitation
  *      음수 가중치 그래프에선 사용할 수 없다. - bellman ford 을 사용.
  *      

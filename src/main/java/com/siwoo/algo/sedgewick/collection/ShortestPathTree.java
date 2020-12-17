@@ -89,7 +89,7 @@ public interface ShortestPathTree<E> extends GraphPaths<E> {
         }
         
         int source = 5;
-        ShortestPathTree<Integer> spt = new Dijkstra<>(G, source);
+        ShortestPathTree<Integer> spt = new BellmanFord<>(G, source);
         for (int v: G.vertexes()) {
             System.out.print(source + " to " + v);
             System.out.printf(" (%4.2f): ", spt.distanceTo(v));

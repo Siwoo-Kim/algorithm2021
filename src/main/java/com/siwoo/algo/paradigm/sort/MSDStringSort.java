@@ -33,8 +33,6 @@ import java.util.Scanner;
  *  time complexity
  *      *
  */
-
-// fail
 public class MSDStringSort implements Sort<String> {
     private static final int radix = 1<<8;
     private static final int M = 15;
@@ -56,16 +54,18 @@ public class MSDStringSort implements Sort<String> {
 
     private void sort(String[] s, int left, int right, int msd) {
         if (right - left <= 1) return;
-        int[] count = new int[radix+2];
-        for (int i=left; i<right; i++)  // 빈도 계산
-            count[charAt(s[i], i) + 2]++;
+        int[] count = new int[radix+2]; // 끝난 문자열을 위한 공간 확보
+        for (int i=left; i<right; i++)  // 빈도 계산. 
+            count[charAt(s[i], msd) + 2]++;
         for (int i=0; i<radix+1; i++)
             count[i+1] += count[i]; // 빈도를 인덱스로 변환.
         for (int i=left; i<right; i++)
-            aux[count[charAt(s[i], i)+1]++] = s[i];
+            aux[count[charAt(s[i], msd)+1]++] = s[i];
         for (int i=left; i<right; i++)
             s[i] = aux[i-left];
         for (int i=0; i<radix; i++)
+            // count[i] ~ count[i+1] is the boundary for given char
+            // left+count[i] ~ left+count[i+1] is the boundary for current call.
             sort(s, left+count[i], left+count[i+1], msd+1);
     }
 

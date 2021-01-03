@@ -3,7 +3,6 @@ package com.siwoo.algo.paradigm.graph;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ZippedUnionFind<E> implements UnionFind<E> {
     private Map<E, E> components = new HashMap<>(10000000);
     private Map<E, Integer> sizes = new HashMap<>(10000000);

@@ -5,5 +5,6 @@ public enum Algorithm {
     DYNAMIC_PROGRAMMING,
     STACK, QUEUE,    // basic data structure
     MATH,
-    BRUTE_FORCE, BACK_TRACKING, BITSET;
+    BRUTE_FORCE, BACK_TRACKING, BITSET,
+    DFS, BFS, BIPARTITE    //GRAPH
 }

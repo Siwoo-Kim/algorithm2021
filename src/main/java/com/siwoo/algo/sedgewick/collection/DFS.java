@@ -36,6 +36,12 @@ import java.util.Scanner;
  *  algorithm.
  *      1. dfs
  *      2. queue 혹은 stack
+ *  
+ *  무방향 그래프에서의 최장거리 구하기.
+ *      dfs(v, depth) 시작시 방문했다고 체크.
+ *      v 의 모든 인접 정점 w 에 대해서
+ *          dfs(w, depth+1) 을 수행.
+ *      dfs(v, depth) 방문 종료시 방문했음을 언체크.
  *      
  */
 public class DFS<E> {

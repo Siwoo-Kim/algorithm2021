@@ -2,6 +2,7 @@ package com.siwoo.algo.sedgewick.collection;
 
 import com.siwoo.algo.util.VisualAccumulator;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -160,6 +161,18 @@ public class HashTable<K, V> implements SymbolTable<K, V> {
         // average length = N/CAPACITY
         if (CAPACITY > DEFAULT_CAPACITY && N/CAPACITY <= 2)
             resize(CAPACITY >> 1);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (K k: keys()) {
+            sb.append(k)
+                    .append(": ")
+                    .append(get(k))
+                    .append("\n");
+        }
+        return sb.toString();
     }
 
     public static void main(String[] args) {

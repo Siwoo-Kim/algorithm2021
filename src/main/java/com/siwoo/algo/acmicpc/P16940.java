@@ -2,13 +2,27 @@ package com.siwoo.algo.acmicpc;
 
 import com.siwoo.algo.util.Algorithm;
 import com.siwoo.algo.util.Using;
+import org.omg.CORBA.INTERNAL;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-//fail
+/**
+ * 올바른 bfs 순서.
+ *  고민할 점: 같은 거리상의 정점 v, u 가 있을 때 
+ *      v 가 먼저 방문되었다면 v 의 인접 정점 w 들이 순서에서 먼저 들어와야 한다.
+ *  
+ *  주어진 order 에 대해서
+ *  
+ *  1. 큐엔 첫 정점 s 을 넣는다.
+ *  2. 현재 큐의 첫 정점 v 에 따라 아래로 순서를 검증한다.
+ *      1. v 의 모든 인접 정점 w 들을 저장.
+ *      2. 현재 v 의 검증해야할 순서 k 라 한다면 k+cnt 만큼
+ *      순회하며 order[k+i] 가 1 에서 기록됬는지 확인한다.
+ *     
+ */
 @Using(algorithm = Algorithm.BFS)
 public class P16940 {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -30,75 +44,37 @@ public class P16940 {
         int[] bfsOrder = Arrays.stream(reader.readLine().split("\\s+"))
                 .mapToInt(Integer::parseInt)
                 .toArray();
-        BFS bfs = new BFS(G, bfsOrder[0]);
-        int dist = 0;
-        Queue<PriorityQueue<Integer>> orderQ = new LinkedList<>();
+        Queue<Integer> q = new LinkedList<>();
+        q.add(1);
+        Set<Integer> visit = new HashSet<>();
+        visit.add(1);
+        int k = 1;
         for (int i=0; i<N; i++) {
-            int v = bfsOrder[i];
-            PriorityQueue<Integer> pq = new PriorityQueue<>(); 
-            if (bfs.distTo.get(v) != dist) {
+            if (q.isEmpty()) {
                 System.out.println(0);
                 return;
             }
-            while (bfs.distTo.get(v) == dist) {
-                pq.add(v);
-                if (i == N-1 || bfs.distTo.get(bfsOrder[i+1]) != dist)
-                    break;
-                v = bfsOrder[++i];
-            }
-            orderQ.add(pq);
-            dist++;
-        }
-        Level[] levels = new Level[bfs.max+1];
-        
-        for (int v: G.keySet()) {
-            if (levels[bfs.distTo.get(v)] == null)
-                levels[bfs.distTo.get(v)] = new Level();
-            levels[bfs.distTo.get(v)].agg.add(v);
-        }
-        int d = 0;
-        boolean ok = true;
-        while (!orderQ.isEmpty()) {
-            PriorityQueue<Integer> q1 = orderQ.poll(),
-                    q2 = levels[d++].agg;
-            while (!q1.isEmpty()) {
-                int v = q1.poll();
-                if (q2.isEmpty()) {
-                    ok = false;
-                    break;
+            Set<Integer> adj = new HashSet<>();
+            int v = q.poll();
+            for (Edge e: G.get(v))
+                if (!visit.contains(e.w))
+                    adj.add(e.w);
+            for (int j=0; j<visit.size(); j++) {
+                int w = bfsOrder[k+j];
+                if (k+j >= N || 
+                    !adj.contains(w)) {
+                    System.out.println("0");
+                    return;
                 }
-                if (v != q2.poll()) {
-                    ok = false;
-                    break;
-                }
+                visit.add(w);
+                q.add(w);
             }
+            k += adj.size();
         }
-        System.out.println(ok ? 1: 0);
+        System.out.println(1);
     }
     
-    private static class Level {
-        private PriorityQueue<Integer> agg = new PriorityQueue<>();
-    }
-    
-    private static class BFS {
-        Map<Integer, Integer> distTo = new HashMap<>();
-        int max = 0;
-
-        public BFS(Map<Integer, List<Edge>> G, int source) {
-            distTo.put(source, 0);
-            Queue<Integer> q = new LinkedList<>();
-            q.add(source);
-            while (!q.isEmpty()) {
-                int v = q.poll();
-                for (Edge e: G.get(v))
-                    if (!distTo.containsKey(e.w)) {
-                        distTo.put(e.w, distTo.get(v) + 1);
-                        max = Math.max(distTo.get(e.w), max);
-                        q.add(e.w);
-                    }
-            }
-        }
-    }
+ 
     
     private static class Edge {
         final int v, w;

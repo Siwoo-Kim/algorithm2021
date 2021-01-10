@@ -22,7 +22,6 @@ package com.siwoo.algo.sedgewick.collection;
  *              
  *      2. tree[i] 은 i 까지 왼쪽으로 l(i) 만큼 구간 합.
  *      
- *      
  */
 public class FenwickTree {
 }

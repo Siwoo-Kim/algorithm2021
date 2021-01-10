@@ -6,5 +6,6 @@ public enum Algorithm {
     STACK, QUEUE,    // basic data structure
     MATH,
     BRUTE_FORCE, BACK_TRACKING, BITSET,
-    DFS, BFS, BIPARTITE, UNION_FIND, CYCLE    //GRAPH
+    DFS, BFS, BIPARTITE, UNION_FIND, CYCLE,
+    TREE //GRAPH
 }

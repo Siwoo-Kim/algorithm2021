@@ -25,7 +25,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *          배열 크기 N 은 소수 (prime) 을 사용한다.
  *          소수는 해싱값을 균일하게 분포. 
  *          
- *          
  *  2. collision-resolution
  *      개별 체이닝 (separate chaining)
  *          배열을 buckets 로 사용하여 인덱스의 항목 각각에 연결리스트을 두어 복수의 요소를 관리.

@@ -1,10 +1,14 @@
 package com.siwoo.algo.acmicpc;
 
+import com.siwoo.algo.util.Algorithm;
+import com.siwoo.algo.util.Using;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+@Using(algorithm = Algorithm.BFS)
 public class P1261 {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static int[][] B;
